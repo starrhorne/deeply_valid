@@ -6,11 +6,11 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "deeply_valid"
     gem.summary = %Q{Validation for complex data structures}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{This gem lets you declaratively specify validations for complex data structures, like those returned from an api.}
     gem.email = "starr@chromahq.com"
     gem.homepage = "http://github.com/starrhorne/deeply_valid"
     gem.authors = ["Starr Horne"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_development_dependency "shoulda"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -21,7 +21,7 @@ end
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+  test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end
 
@@ -29,7 +29,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
     test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
+    test.pattern = 'test/**/*_test.rb'
     test.verbose = true
   end
 rescue LoadError

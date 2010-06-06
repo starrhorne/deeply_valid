@@ -1,6 +1,50 @@
-= deeply_valid
+= DeeplyValid
 
-Description goes here.
+There are times when you just can't fake it. Maybe you're 
+implementing an API, or interacting with a legacy system. 
+But for whatever reason, you have complex data structures 
+that absolutely have to be valid.
+
+DeeplyValid lets you define a "schema" for your data structures
+in a nice, declarative, way.
+
+== The Simplest Example:
+
+  class MyValidations < DeeplyValid::Base
+    define :name, "bob"
+  end
+
+  # true
+  MyValidations[:name].valid?("bob") 
+
+  # false
+  MyValidations[:name].valid?("joe") 
+
+
+== A more realistic example
+
+  class MyValidations < DeeplyValid::Base
+    define :person, {
+      :id => token(32),
+      :age => integer(1..100),
+      :name => string(1..100),
+      :department => {
+        :name => any('sales', 'accounting', 'engineering'),
+        :building => integer
+      },
+      :performace_reviews => array( structure(:review) )
+    }
+
+    # This structure is referenced in the "person" structure
+    define :review, {
+      :author => string(1..100),
+      :body => string(1..1024)
+    }
+  end
+
+  # true
+  MyValidations[:name].valid?("bob") 
+
 
 == Note on Patches/Pull Requests
  

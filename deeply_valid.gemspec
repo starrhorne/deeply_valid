@@ -22,9 +22,16 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.rdoc",
      "Rakefile",
+     "VERSION",
+     "deeply_valid.gemspec",
      "lib/deeply_valid.rb",
+     "lib/deeply_valid/base.rb",
+     "lib/deeply_valid/validation.rb",
+     "lib/deeply_valid/validation_helpers.rb",
+     "test/base_test.rb",
      "test/helper.rb",
-     "test/test_deeply_valid.rb"
+     "test/validation_helpers_test.rb",
+     "test/validation_test.rb"
   ]
   s.homepage = %q{http://github.com/starrhorne/deeply_valid}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -32,8 +39,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Validation for complex data structures}
   s.test_files = [
-    "test/helper.rb",
-     "test/test_deeply_valid.rb"
+    "test/base_test.rb",
+     "test/helper.rb",
+     "test/validation_helpers_test.rb",
+     "test/validation_test.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -41,9 +50,12 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_development_dependency(%q<shoulda>, [">= 0"])
     else
+      s.add_dependency(%q<shoulda>, [">= 0"])
     end
   else
+    s.add_dependency(%q<shoulda>, [">= 0"])
   end
 end
 

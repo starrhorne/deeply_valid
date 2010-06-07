@@ -22,8 +22,7 @@ module DeeplyValid
       # @return [Validation] The validation
       #
       def token(size = nil)
-        s = size ? "{#{size.is_a?(Range) ? [size.first, size.last].uniq.join(",") : size}}" : nil 
-        /[0-9a-zA-Z_]#{ s }/
+        Validation.new { |d| (d =~ /^[0-9a-zA-Z_]*$/) && in_range?(d.size, size) }
       end
 
       #
@@ -146,16 +145,41 @@ module DeeplyValid
         end
       end
 
-      protected
+      #
+      # Determine if a val is included in a range. A number of
+      # range formats are supportet
+      #
+      # == Example:
+      #
+      # All these will return true
+      #
+      #   in_range(1, 1)    
+      #   in_range(1, 0..9)    
+      #   in_range(1, :min => 0, :max => 9)    
+      #   in_range(1, :less_than_or_equal_to => 2)    
+      #
+      # @param val A number, date, or other other object to compare
+      # @param [Integer, Range, Hash] range The range to test `val` against
+      #
+      def in_range?(val, range)
+        return true unless range
 
-        #
-        # Determine if a val is included in a range. Handles
-        # range==int and range==nil correctly
-        #
-        def in_range?(val, range)
-          return true unless range
+        if range.is_a?(Hash)
+          result = true
+          result &= ( val < range[:before] ) if range[:before]
+          result &= ( val > range[:after] ) if range[:after]
+          result &= ( val <= range[:max] ) if range[:max]
+          result &= ( val >= range[:min] ) if range[:min]
+          result &= ( val < range[:less_than] ) if range[:less_than]
+          result &= ( val <= range[:less_than_or_equal_to] ) if range[:less_than_or_equal_to]
+          result &= ( val > range[:greater_than] ) if range[:greater_than]
+          result &= ( val >= range[:greater_than_or_equal_to] ) if range[:greater_than_or_equal_to]
+          result
+        else
           range = [range] unless range.respond_to?(:include?)
           range.include?(val)
+        end
+
         end
     end
   end

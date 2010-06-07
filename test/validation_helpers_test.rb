@@ -14,16 +14,19 @@ class ValidationHelpersTest < Test::Unit::TestCase
 
     context "token helper" do
 
-      should "return correct regexp when no size specified" do
-        assert Sample.token == /[0-9a-zA-Z_]/
+      should "validate correctly, without size" do
+        assert Sample.token.valid?("a_sdf123")
+        assert !Sample.token.valid?("a_!@#sdf123")
       end
 
-      should "return correct regexp when exact size specified" do
-        assert Sample.token(32) == /[0-9a-zA-Z_]{32}/
+      should "validate correctly, with exact size" do
+        assert Sample.token(4).valid?("asdf")
+        assert !Sample.token(4).valid?("a")
       end
 
-      should "return correct regexp when range size specified" do
-        assert Sample.token(1..23) == /[0-9a-zA-Z_]{1,23}/
+      should "validate correctly, with range size" do
+        assert Sample.token(1..5).valid?("asdf")
+        assert !Sample.token(3..5).valid?("a")
       end
 
     end
@@ -138,6 +141,63 @@ class ValidationHelpersTest < Test::Unit::TestCase
 
         assert !Sample.array(/^[a-z]+$/).valid?([ "1abc", "def", "xyz" ])
         assert !Sample.array(Validation.new { |d| d > 10 }).valid?([ 11, 0, 12, 23 ])
+      end
+    end
+
+    context "in_range? method" do
+
+      should "work with int" do
+        assert Sample.in_range?(1, 1)
+        assert !Sample.in_range?(1, 2)
+      end
+      
+      should "work with range" do
+        assert Sample.in_range?(1, 0..10)
+        assert !Sample.in_range?(20, 1..5)
+      end
+
+      should "work with min" do
+        assert Sample.in_range?(1, :min => 0 )
+        assert Sample.in_range?(0, :min => 0 )
+        assert !Sample.in_range?(-1, :min => 0 )
+      end
+
+      should "work with max" do
+        assert Sample.in_range?(-1, :max => 0 )
+        assert Sample.in_range?(0, :max => 0 )
+        assert !Sample.in_range?(1, :max => 0 )
+      end
+
+      should "work with before" do
+        assert Sample.in_range?(1, :before => 2 )
+        assert !Sample.in_range?(2, :before => 2 )
+      end
+
+      should "work with after" do
+        assert Sample.in_range?(3, :after => 2 )
+        assert !Sample.in_range?(2, :after => 2 )
+      end
+
+      should "work with less_than" do
+        assert Sample.in_range?(1, :less_than => 2 )
+        assert !Sample.in_range?(2, :less_than => 2 )
+      end
+
+      should "work with greater_than" do
+        assert Sample.in_range?(3, :greater_than => 2 )
+        assert !Sample.in_range?(2, :greater_than => 2 )
+      end
+
+      should "work with greater_than_or_equal_to" do
+        assert Sample.in_range?(1, :greater_than_or_equal_to => 0 )
+        assert Sample.in_range?(0, :greater_than_or_equal_to => 0 )
+        assert !Sample.in_range?(-1, :greater_than_or_equal_to => 0 )
+      end
+
+      should "work with less_than_or_equal_to" do
+        assert Sample.in_range?(-1, :less_than_or_equal_to => 0 )
+        assert Sample.in_range?(0, :less_than_or_equal_to => 0 )
+        assert !Sample.in_range?(1, :less_than_or_equal_to => 0 )
       end
     end
     

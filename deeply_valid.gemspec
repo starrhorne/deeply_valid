@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{deeply_valid}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Starr Horne"]
-  s.date = %q{2010-06-06}
+  s.date = %q{2010-06-07}
   s.description = %q{This gem lets you declaratively specify validations for complex data structures, like those returned from an api.}
   s.email = %q{starr@chromahq.com}
   s.extra_rdoc_files = [
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "lib/deeply_valid/validation_helpers.rb",
      "test/base_test.rb",
      "test/helper.rb",
+     "test/system_test.rb",
      "test/validation_helpers_test.rb",
      "test/validation_test.rb"
   ]
@@ -41,6 +42,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/base_test.rb",
      "test/helper.rb",
+     "test/system_test.rb",
      "test/validation_helpers_test.rb",
      "test/validation_test.rb"
   ]

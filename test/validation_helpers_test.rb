@@ -67,6 +67,33 @@ class ValidationHelpersTest < Test::Unit::TestCase
 
     end
 
+    context "float helper" do
+
+      should "validate correctly" do
+        assert Sample.float.valid?(1.234)
+        assert !Sample.float(:max => 0.5).valid?(1.234)
+      end
+
+    end
+
+    context "date helper" do
+
+      should "validate correctly" do
+        assert Sample.date.valid?(Date.today)
+        assert !Sample.date(:before => Date.today).valid?(Date.today)
+      end
+
+    end
+
+    context "datetime helper" do
+
+      should "validate correctly" do
+        assert Sample.datetime.valid?(DateTime.now)
+        assert !Sample.datetime(:before => DateTime.now).valid?(DateTime.now)
+      end
+
+    end
+
     context "instance_of helper" do
 
       should "validate correctly" do

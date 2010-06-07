@@ -46,6 +46,36 @@ module DeeplyValid
       end
 
       #
+      # Validates date with optional limit
+      #
+      # @param limit 
+      # @return [Validation] The validation
+      #
+      def date(limit = nil)
+        Validation.new { |d| d.is_a?(Date) && in_range?(d, limit) }
+      end
+
+      #
+      # Validates float with optional limit
+      #
+      # @param limit 
+      # @return [Validation] The validation
+      #
+      def float(limit = nil)
+        Validation.new { |d| d.is_a?(Float) && in_range?(d, limit) }
+      end
+
+      #
+      # Validates date with optional limit
+      #
+      # @param [Integer, Range] limit 
+      # @return [Validation] The validation
+      #
+      def datetime(limit = nil)
+        Validation.new { |d| d.is_a?(DateTime) && in_range?(d, limit) }
+      end
+
+      #
       # Validate by class
       #
       # @param [Class] klass The class

@@ -41,9 +41,21 @@ in a nice, declarative, way.
       :body => string(1..1024)
     }
   end
-
+ 
   # true
-  MyValidations[:name].valid?("bob") 
+  MyValidations[:person].valid?({
+    :id => "x"*32,
+    :age => 22,
+    :name => "Bob Jones",
+    :department => {
+      :name => "sales",
+      :building => 33
+    },
+    :performace_reviews  => [
+      { :author => "joe", :body => "a review" }, 
+      { :author => "bill", :body => "another review" } 
+    ]
+  })
 
 
 == Note on Patches/Pull Requests

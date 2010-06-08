@@ -90,14 +90,14 @@ module DeeplyValid
       #
       # @return [Validation] The validation
       #
-      def json
+      def json(size=nil)
         Validation.new do |d| 
           begin
             JSON.parse(d)
           rescue
             false
           else
-            true
+            in_range?(d.size, size)
           end
         end
       end

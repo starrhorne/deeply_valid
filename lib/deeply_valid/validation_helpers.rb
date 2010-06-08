@@ -174,7 +174,7 @@ module DeeplyValid
       # @param [Validation] rule The validation rule
       # @return [Validation] The validation
       #
-      def array(rule)
+      def array(rule = nil)
         return instance_of(Array) unless rule
 
         validation = rule.is_a?(Validation) ? rule : Validation.new(rule)

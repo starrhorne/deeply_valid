@@ -76,6 +76,19 @@ class ValidationHelpersTest < Test::Unit::TestCase
 
     end
 
+
+    context "boolean helper" do
+
+      should "validate correctly" do
+        assert Sample.boolean.valid?(true)
+        assert Sample.boolean.valid?(false)
+        assert !Sample.boolean.valid?(nil)
+        assert !Sample.boolean.valid?("")
+        assert !Sample.boolean.valid?(123)
+      end
+
+    end
+
     context "date helper" do
 
       should "validate correctly" do

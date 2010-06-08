@@ -17,7 +17,7 @@ module DeeplyValid
     #
     def initialize(rule = nil, &block)
 
-      if !rule && !block_given?
+      if rule.nil? && !block_given?
         raise "No validation rule specified"
       end
 

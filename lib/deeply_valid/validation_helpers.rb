@@ -133,6 +133,15 @@ module DeeplyValid
       end
 
       #
+      # Validate true or false
+      # 
+      # @return [Validation] The validation
+      #
+      def boolean
+        any(true, false)
+      end
+
+      #
       # Validate all keys / values in a hash
       #
       # == Example

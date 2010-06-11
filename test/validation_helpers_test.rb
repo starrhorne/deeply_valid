@@ -107,6 +107,15 @@ class ValidationHelpersTest < Test::Unit::TestCase
 
     end
 
+    context "time helper" do
+
+      should "validate correctly" do
+        assert Sample.time.valid?(Time.now)
+        assert !Sample.time(:before => Time.now).valid?(Time.now)
+      end
+
+    end
+
     context "instance_of helper" do
 
       should "validate correctly" do

@@ -66,13 +66,23 @@ module DeeplyValid
       end
 
       #
-      # Validates date with optional limit
+      # Validates datetime with optional limit
       #
       # @param [Integer, Range] limit 
       # @return [Validation] The validation
       #
       def datetime(limit = nil)
         Validation.new { |d| d.is_a?(DateTime) && in_range?(d, limit) }
+      end
+
+      #
+      # Validates time with optional limit
+      #
+      # @param [Integer, Range] limit 
+      # @return [Validation] The validation
+      #
+      def time(limit = nil)
+        Validation.new { |d| d.is_a?(Time) && in_range?(d, limit) }
       end
 
       #

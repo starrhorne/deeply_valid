@@ -86,6 +86,16 @@ module DeeplyValid
       end
 
       #
+      # Validates nil. Normally a nil means "don't validate". Use this
+      # if you're expecting an actual nil
+      #
+      # @return [Validation] The validation
+      #
+      def nil_value
+        Validation.new { |d| d.nil? }
+      end
+
+      #
       # Validate by class
       #
       # @param [Class] klass The class

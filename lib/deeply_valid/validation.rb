@@ -67,6 +67,9 @@ module DeeplyValid
         elsif v.is_a?(Hash)
           valid_structure?(data[k], v)
 
+        elsif v.nil?
+          !data.has_key?(k)
+
         else
           data[k] == v
         end

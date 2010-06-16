@@ -101,4 +101,23 @@ class ValidationTest < Test::Unit::TestCase
 
   end
 
+  context "A structure validation for {:key => nil}" do
+    setup do
+      rule = { :key => nil, :bogus => 1 }
+      @validation = Validation.new(rule)
+    end
+
+    should_validate_all([
+      {:bogus => 1}
+    ])
+
+    should_not_validate_any([
+      {:key => false, :bogus => 1},
+      {:key => true, :bogus => 1},
+      {:key => nil, :bogus => 1},
+      {:key => "sesame", :bogus => 1},
+    ])
+
+  end
+
 end

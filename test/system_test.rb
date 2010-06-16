@@ -17,7 +17,8 @@ class SystemTest < Test::Unit::TestCase
             :building => integer
           },
           :performace_reviews => array( structure(:review) ),
-          :pension => value { |data| integer if data[:age] > 50 }
+          :pension => value { |data| integer if data[:age] > 50 },
+          :hobby => optional(string)
           
         }
 
@@ -48,6 +49,7 @@ class SystemTest < Test::Unit::TestCase
         :age => 61,
         :name => "Bob Jones",
         :pension => 666,
+        :hobby => "boating",
         :department => {
           :name => "sales",
           :building => 33

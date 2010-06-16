@@ -12,6 +12,7 @@ class BaseTest < Test::Unit::TestCase
         define :manual, DeeplyValid::Validation.new { |d| d > 10 } 
         define :literal, "x"
         define :hash, { :key => "val" }
+        define :nested_self_reference, structure { |data| structure(:regexp) }
       end
     end
 
@@ -34,6 +35,12 @@ class BaseTest < Test::Unit::TestCase
       assert Sample[:self_reference]
       assert Sample[:self_reference].valid?("abc")
       assert !Sample[:self_reference].valid?("123")
+    end
+
+    should "Handle nested self-reference" do
+      assert Sample[:nested_self_reference]
+      assert Sample[:nested_self_reference].valid?("abc")
+      assert !Sample[:nested_self_reference].valid?("123")
     end
     
   end

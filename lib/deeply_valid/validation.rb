@@ -58,6 +58,8 @@ module DeeplyValid
     def valid_structure?(data, fragment_rule = nil)
       (fragment_rule || @rule).all? do |k, v|
 
+        v = v.call(@data) if v.is_a?(Proc)
+          
         if v.is_a?(Validation)
           v.valid?(data[k])
 
@@ -84,10 +86,17 @@ module DeeplyValid
     #
     def valid?(data)
 
-      if @rule.kind_of?(Regexp)
+      @data = data
+
+      rule = @rule.is_a?(Proc) ? @rule.call(@data) : @rule
+
+      result = if rule.kind_of?(Regexp)
         valid_pattern?(data)
 
-      elsif @rule.kind_of?(Hash)
+      elsif rule.kind_of?(Validation)
+        rule.valid?(data)
+
+      elsif rule.kind_of?(Hash)
         valid_structure?(data)
 
       elsif @block
@@ -96,6 +105,10 @@ module DeeplyValid
       else
         data == @rule
       end
+
+      @data = nil
+
+      result
 
     end
 

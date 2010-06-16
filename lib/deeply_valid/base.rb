@@ -51,10 +51,19 @@ module DeeplyValid
         (@definitions ||= {})[name.to_sym]
       end
 
-      def structure(name)
-        Validation.new { |d| self[name.to_sym].valid?(d) }
+      def structure(name = nil, &block)
+        if name
+          Validation.new { |d| self[name.to_sym].valid?(d) }
+        elsif block_given?
+          block
+        else
+          raise "structure requires name or block"
+        end
       end
 
+      def value(&block)
+        block
+      end
 
     end
   end

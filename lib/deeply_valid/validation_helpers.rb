@@ -229,8 +229,8 @@ module DeeplyValid
           range = [range] unless range.respond_to?(:include?)
           range.include?(val)
         end
+      end
 
-        end
     end
   end
 end

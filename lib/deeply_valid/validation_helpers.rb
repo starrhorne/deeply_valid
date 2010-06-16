@@ -1,4 +1,5 @@
 require 'json'
+require 'date'
 
 module DeeplyValid
 
@@ -63,16 +64,6 @@ module DeeplyValid
       #
       def float(limit = nil)
         Validation.new { |d| d.is_a?(Float) && in_range?(d, limit) }
-      end
-
-      #
-      # Validates datetime with optional limit
-      #
-      # @param [Integer, Range] limit 
-      # @return [Validation] The validation
-      #
-      def datetime(limit = nil)
-        Validation.new { |d| d.is_a?(DateTime) && in_range?(d, limit) }
       end
 
       #

@@ -92,17 +92,8 @@ class ValidationHelpersTest < Test::Unit::TestCase
     context "date helper" do
 
       should "validate correctly" do
-        assert Sample.date.valid?(Date.today)
-        assert !Sample.date(:before => Date.today).valid?(Date.today)
-      end
-
-    end
-
-    context "datetime helper" do
-
-      should "validate correctly" do
-        assert Sample.datetime.valid?(DateTime.now)
-        assert !Sample.datetime(:before => DateTime.now).valid?(DateTime.now)
+        assert Sample.date.valid?(Date.civil(2010, 3, 10))
+        assert !Sample.date(:before => Date.civil(2010, 3, 10)).valid?(Date.civil(2010, 4, 10))
       end
 
     end

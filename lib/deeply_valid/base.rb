@@ -55,6 +55,7 @@ module DeeplyValid
         Validation.new { |d| self[name.to_sym].valid?(d) }
       end
 
+
     end
   end
 end

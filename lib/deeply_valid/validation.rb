@@ -6,6 +6,8 @@ module DeeplyValid
   #
   class Validation
 
+    attr_accessor :options
+
     #
     # The initializer defines the conditions that will
     # satasfy this validation.
@@ -15,12 +17,13 @@ module DeeplyValid
     # @param [Object] rule    When `rule` is any other non-nil object, use `==` to validate
     # @param [Proc]   &block  An optional block, which will take one param and return true or false
     #
-    def initialize(rule = nil, &block)
+    def initialize(rule = nil, options = {}, &block)
 
       if rule.nil? && !block_given?
         raise "No validation rule specified"
       end
 
+      @options = options
       @rule = rule
       @block = block
     end
@@ -59,9 +62,9 @@ module DeeplyValid
       (fragment_rule || @rule).all? do |k, v|
 
         v = v.call(@data) if v.is_a?(Proc)
-          
+
         if v.is_a?(Validation)
-          v.valid?(data[k])
+          (v.options[:optional] && !data.has_key?(k)) || v.valid?(data[k])
 
         elsif v.is_a?(Regexp)
           !!(data[k] =~ v)

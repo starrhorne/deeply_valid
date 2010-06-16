@@ -231,6 +231,27 @@ module DeeplyValid
         end
       end
 
+      #
+      # Set a validation as optional. This only has any effect
+      # if the validation is part of a structure.
+      #
+      # The following validation:
+      #   
+      #   {:key => optional(integer)}
+      #
+      # Will validate both:
+      #
+      #   {:key => 1}
+      #   {}
+      #
+      # @param [Validation] validation
+      # @return [Validation]
+      #
+      def optional(validation)
+        validation.options[:optional] = true
+        validation
+      end
+
     end
   end
 end

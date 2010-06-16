@@ -120,4 +120,23 @@ class ValidationTest < Test::Unit::TestCase
 
   end
 
+  context "A structure with an optional validation" do
+    setup do
+      rule = { :key => Validation.new(1, :optional => true) }
+      @validation = Validation.new(rule)
+    end
+
+    should_validate_all([
+      {:key => 1},
+      {}
+    ])
+
+    should_not_validate_any([
+      {:key => 2},
+      {:key => nil},
+      {:key => false}
+    ])
+
+  end
+
 end

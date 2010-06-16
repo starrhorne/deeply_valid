@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{deeply_valid}
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Starr Horne"]
-  s.date = %q{2010-06-11}
+  s.date = %q{2010-06-15}
   s.description = %q{This gem lets you declaratively specify validations for complex data structures, like those returned from an api.}
   s.email = %q{starr@chromahq.com}
   s.extra_rdoc_files = [
